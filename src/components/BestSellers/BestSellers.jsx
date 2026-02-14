@@ -1,3 +1,4 @@
+import useAuth from "@/Hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React from "react";
@@ -59,6 +60,9 @@ import { Link } from "react-router";
 // ];
 
 const BestSellers = () => {
+
+  const { user, signOutUser } = useAuth();
+  console.log(user, 'user info');
   // cakes data fetching
   const { data: cakes } = useQuery({
     queryKey: ["cakes"],
@@ -83,6 +87,22 @@ const BestSellers = () => {
           These trending cakes are flying off our shelves - Don't miss out!
         </p>
         <p className="font-normal text-center">Last updated: Feb 14, 2:14 AM</p>
+      </div>
+
+      <div className="flex justify-center my-10">
+        {user ? (
+          <>
+            <div className="flex items-center gap-5">
+              <button onClick={() => {
+                signOutUser();
+              }} className="bg-blue-500 cursor-pointer text-white px-4 py-2 rounded-lg">Logout</button>
+              <p>{user?.email}</p>
+              <p>{user?.displayName}</p>
+            </div>
+          </>
+        ) : (
+          <Link to="/login"><button className="bg-blue-500 cursor-pointer text-white px-4 py-2 rounded-lg">Login</button></Link>
+        )}
       </div>
 
       {/* cards content */}

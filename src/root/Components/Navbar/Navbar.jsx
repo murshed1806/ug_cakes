@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import {
   ShoppingCart,
   User,
@@ -33,9 +33,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { AuthContext } from "@/AuthContext/AuthContext";
+// import useAuth from "@/Hooks/useAuth";
 
 const Navbar = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  // const { user } = useAuth();
+  // console.log(user, 'user info');
 
   // Navigation links data
   const navLinks = [
@@ -123,18 +127,18 @@ const Navbar = () => {
           >
             <Search className="h-5 w-5" />
           </Button>
-          
+
           <Button variant="ghost" size="icon">
             <Monitor className="h-5 w-5" />
           </Button>
-          
+
           <Button variant="ghost" size="icon" className="relative">
             <ShoppingCart className="h-5 w-5" />
             <span className="absolute -top-1 -right-1 bg-purple-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
               0
             </span>
           </Button>
-          
+
           <Button variant="ghost" size="icon">
             <User className="h-5 w-5" />
           </Button>
