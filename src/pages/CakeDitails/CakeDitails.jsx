@@ -345,66 +345,68 @@ const CakeDetails = () => {
             </div>
           </div>
 
-          {/* Additional tabs section */}
-          <div className="border-t border-gray-200 dark:border-gray-700 p-6 lg:p-8">
-            <Tabs defaultValue="details" className="w-full">
-              <TabsList className="grid w-full max-w-md grid-cols-3">
-                <TabsTrigger value="details">Details</TabsTrigger>
-                <TabsTrigger value="nutrition">Nutrition</TabsTrigger>
-                <TabsTrigger value="reviews">Reviews</TabsTrigger>
-              </TabsList>
-              <TabsContent value="details" className="mt-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Product Details</h4>
-                    <ul className="space-y-2 text-gray-600 dark:text-gray-400">
-                      <li>• Fresh sponge layers</li>
-                      <li>• Velvety cream frosting</li>
-                      <li>• Hand-arranged strawberries</li>
-                      <li>• Premium ingredients</li>
-                      <li>• Perfect for celebrations</li>
-                    </ul>
+          {/* Additional tabs section - Centered */}
+          <div className="border-t border-gray-600 dark:border-gray-700 p-6 lg:p-8 w-full">
+            <div className="max-w-3xl mx-auto">
+              <Tabs defaultValue="details" className="w-full">
+                <TabsList className="grid w-full max-w-md mx-auto grid-cols-3 mb-15">
+                  <TabsTrigger value="details">Details</TabsTrigger>
+                  <TabsTrigger value="nutrition">Nutrition</TabsTrigger>
+                  <TabsTrigger value="reviews">Reviews</TabsTrigger>
+                </TabsList>
+                <TabsContent value="details" className="mt-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Product Details</h4>
+                      <ul className="space-y-2 text-gray-600 dark:text-gray-400">
+                        <li>• Fresh sponge layers</li>
+                        <li>• Velvety cream frosting</li>
+                        <li>• Hand-arranged strawberries</li>
+                        <li>• Premium ingredients</li>
+                        <li>• Perfect for celebrations</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Specifications</h4>
+                      <ul className="space-y-2 text-gray-600 dark:text-gray-400">
+                        <li>• Weight: 1 kg (approx)</li>
+                        <li>• Serves: 8-10 people</li>
+                        <li>• Shelf life: 3 days</li>
+                        <li>• Storage: Refrigerate</li>
+                      </ul>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Specifications</h4>
-                    <ul className="space-y-2 text-gray-600 dark:text-gray-400">
-                      <li>• Weight: 1 kg (approx)</li>
-                      <li>• Serves: 8-10 people</li>
-                      <li>• Shelf life: 3 days</li>
-                      <li>• Storage: Refrigerate</li>
-                    </ul>
+                </TabsContent>
+                <TabsContent value="nutrition" className="mt-6">
+                  <p className="text-gray-600 dark:text-gray-400">
+                    Nutritional information per serving (100g):
+                  </p>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+                    <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg text-center">
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Calories</p>
+                      <p className="text-lg font-semibold text-gray-900 dark:text-white">350 kcal</p>
+                    </div>
+                    <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg text-center">
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Protein</p>
+                      <p className="text-lg font-semibold text-gray-900 dark:text-white">4g</p>
+                    </div>
+                    <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg text-center">
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Carbs</p>
+                      <p className="text-lg font-semibold text-gray-900 dark:text-white">45g</p>
+                    </div>
+                    <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg text-center">
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Fat</p>
+                      <p className="text-lg font-semibold text-gray-900 dark:text-white">18g</p>
+                    </div>
                   </div>
-                </div>
-              </TabsContent>
-              <TabsContent value="nutrition" className="mt-6">
-                <p className="text-gray-600 dark:text-gray-400">
-                  Nutritional information per serving (100g):
-                </p>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-                  <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg text-center">
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Calories</p>
-                    <p className="text-lg font-semibold text-gray-900 dark:text-white">350 kcal</p>
-                  </div>
-                  <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg text-center">
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Protein</p>
-                    <p className="text-lg font-semibold text-gray-900 dark:text-white">4g</p>
-                  </div>
-                  <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg text-center">
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Carbs</p>
-                    <p className="text-lg font-semibold text-gray-900 dark:text-white">45g</p>
-                  </div>
-                  <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg text-center">
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Fat</p>
-                    <p className="text-lg font-semibold text-gray-900 dark:text-white">18g</p>
-                  </div>
-                </div>
-              </TabsContent>
-              <TabsContent value="reviews" className="mt-6">
-                <p className="text-gray-600 dark:text-gray-400">
-                  Customer reviews coming soon...
-                </p>
-              </TabsContent>
-            </Tabs>
+                </TabsContent>
+                <TabsContent value="reviews" className="mt-6">
+                  <p className="text-gray-600 dark:text-gray-400">
+                    Customer reviews coming soon...
+                  </p>
+                </TabsContent>
+              </Tabs>
+            </div>
           </div>
 
           {/* Related products section */}
