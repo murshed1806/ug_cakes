@@ -1,9 +1,10 @@
-import { createBrowserRouter } from "react-router";
-import RootLayout from "../Layouts/RootLayout";
-import Home from "../pages/home/Home";
-import CakeDitails from "@/pages/CakeDitails/CakeDitails";
-import Login from "@/pages/Login/Login";
-import Register from "@/pages/Register/Register";
+import { createBrowserRouter } from "react-router"
+import RootLayout from "../Layouts/RootLayout"
+import Home from "../pages/home/Home"
+import CakeDitails from "@/pages/CakeDitails/CakeDitails"
+import Login from "@/pages/Login/Login"
+import Register from "@/pages/Register/Register"
+import AdminPanel from "@/pages/admin-panel/AdminPanel"
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       },
     ],
   },
-]);
+  {
+    path: "/admin-panel",
+    element: <AdminPanel />,
+  },
+])
 
-export default router;
+export default router
