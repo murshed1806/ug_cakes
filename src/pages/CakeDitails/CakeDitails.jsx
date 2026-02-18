@@ -23,7 +23,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from '@/Hooks/use-toast';
 
-
 const CakeDetails = () => {
   const { id } = useParams();
   const { toast } = useToast();
@@ -35,20 +34,25 @@ const CakeDetails = () => {
   const { data: cakes, isLoading } = useQuery({
     queryKey: ['cakes'],
     queryFn: async () => {
-      const res = await axios.get('/cakes.json')
-      return res.data
+      const res = await axios.get('/cakes.json');
+      return res.data;
     }
   });
 
-  // findout single cake
-  const cake = cakes?.find((cake) => cake?.id == id);
+  // Find the cake - FIXED: Now accessing cake.cakeDetails
+  const cakeItem = cakes?.find((item) => item?.cakeDetails?.id == id);
+  const cake = cakeItem?.cakeDetails; // Extract the cakeDetails object
 
-  // Mock additional images (in real app, these would come from API)
+  // Get related products using the new structure
+  const relatedProducts = cakes
+    ?.filter(item => item?.cakeDetails?.id != id)
+    ?.slice(0, 4)
+    ?.map(item => item.cakeDetails);
+
+  // Get additional images
   const cakeImages = cake ? [
-    cake.avater,
-    cake.avater.replace('.webp', '-2.webp'),
-    cake.avater.replace('.webp', '-3.webp'),
-    cake.avater.replace('.webp', '-4.webp'),
+    cake.avatar,
+    ...(cake.additionalImages || [])
   ] : [];
 
   const handleAddToCart = () => {
@@ -77,7 +81,7 @@ const CakeDetails = () => {
   };
 
   const incrementQuantity = () => {
-    if (quantity < (cake?.stok || 10)) {
+    if (quantity < (cake?.stock || 10)) {
       setQuantity(quantity + 1);
     }
   };
@@ -131,11 +135,11 @@ const CakeDetails = () => {
             <div className="space-y-4">
               <div className="relative group">
                 <img
-                  src={cakeImages[selectedImage] || cake.avater}
+                  src={cakeImages[selectedImage] || cake.avatar}
                   alt={cake.title}
                   className="w-full h-[400px] lg:h-[500px] object-cover rounded-xl shadow-md"
                   onError={(e) => {
-                    e.target.src = cake.avater; // Fallback to main image
+                    e.target.src = cake.avatar; // Fallback to main image
                   }}
                 />
                 {/* Wishlist button */}
@@ -156,7 +160,7 @@ const CakeDetails = () => {
 
               {/* Thumbnail images */}
               <div className="grid grid-cols-4 gap-2">
-                {cakeImages.map((img, index) => (
+                {cakeImages.slice(0, 4).map((img, index) => (
                   <div
                     key={index}
                     onClick={() => setSelectedImage(index)}
@@ -171,7 +175,7 @@ const CakeDetails = () => {
                       alt={`${cake.title} ${index + 1}`}
                       className="w-full h-20 object-cover"
                       onError={(e) => {
-                        e.target.src = cake.avater; // Fallback to main image
+                        e.target.src = cake.avatar; // Fallback to main image
                       }}
                     />
                   </div>
@@ -188,20 +192,20 @@ const CakeDetails = () => {
                 </h1>
                 
                 <div className="flex items-center gap-4 flex-wrap">
-                  {/* Rating */}
+                  {/* Rating - Using new structure */}
                   <div className="flex items-center gap-1">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <Star
                         key={star}
                         className={`h-4 w-4 ${
-                          star <= 4 
+                          star <= (cake.rating?.value || 4) 
                             ? 'fill-yellow-400 text-yellow-400' 
                             : 'text-gray-300 dark:text-gray-600'
                         }`}
                       />
                     ))}
                     <span className="text-sm text-gray-600 dark:text-gray-400 ml-2">
-                      (4.0) • 128 reviews
+                      ({cake.rating?.value || 4.0}) • {cake.rating?.count || 128} reviews
                     </span>
                   </div>
 
@@ -212,24 +216,28 @@ const CakeDetails = () => {
                 </div>
               </div>
 
-              {/* Price */}
+              {/* Price - Using new pricing structure */}
               <div className="flex items-baseline gap-3">
                 <span className="text-3xl font-bold text-purple-600 dark:text-purple-400">
-                  ${cake.price.toFixed(2)}
+                  ${cake.pricing?.discounted?.toFixed(2) || cake.price?.toFixed(2)}
                 </span>
-                <span className="text-sm text-gray-500 dark:text-gray-400 line-through">
-                  ${(cake.price * 1.2).toFixed(2)}
-                </span>
-                <Badge className="bg-green-500 text-white">20% OFF</Badge>
+                {cake.pricing?.original && (
+                  <span className="text-sm text-gray-500 dark:text-gray-400 line-through">
+                    ${cake.pricing?.original?.toFixed(2)}
+                  </span>
+                )}
+                {cake.pricing?.discountPercentage > 0 && (
+                  <Badge className="bg-green-500 text-white">{cake.pricing?.discountPercentage}% OFF</Badge>
+                )}
               </div>
 
-              {/* Stock status */}
+              {/* Stock status - Using stock from new structure */}
               <div className="flex items-center gap-2">
-                {cake.stok > 0 ? (
+                {cake.stock > 0 ? (
                   <>
                     <Check className="h-4 w-4 text-green-500" />
                     <span className="text-sm text-green-600 dark:text-green-400">
-                      In Stock ({cake.stok} available)
+                      In Stock ({cake.stock} available)
                     </span>
                   </>
                 ) : (
@@ -279,14 +287,14 @@ const CakeDetails = () => {
                   </span>
                   <button
                     onClick={incrementQuantity}
-                    disabled={quantity >= cake.stok}
+                    disabled={quantity >= cake.stock}
                     className="px-3 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   >
                     <Plus className="h-4 w-4" />
                   </button>
                 </div>
                 <span className="text-sm text-gray-500 dark:text-gray-400">
-                  Max: {cake.stok}
+                  Max: {cake.stock}
                 </span>
               </div>
 
@@ -294,7 +302,7 @@ const CakeDetails = () => {
               <div className="grid grid-cols-2 gap-4">
                 <Button
                   onClick={handleAddToCart}
-                  disabled={cake.stok === 0}
+                  disabled={cake.stock === 0}
                   className="bg-purple-600 hover:bg-purple-700 text-white h-12 text-lg"
                 >
                   <ShoppingCart className="h-5 w-5 mr-2" />
@@ -302,7 +310,7 @@ const CakeDetails = () => {
                 </Button>
                 <Button
                   onClick={handleBuyNow}
-                  disabled={cake.stok === 0}
+                  disabled={cake.stock === 0}
                   variant="outline"
                   className="border-purple-600 text-purple-600 hover:bg-purple-50 dark:hover:bg-purple-900/30 h-12 text-lg"
                 >
@@ -310,32 +318,25 @@ const CakeDetails = () => {
                 </Button>
               </div>
 
-              {/* Delivery info */}
+              {/* Delivery info - Using new structure */}
               <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4 space-y-3">
-                <div className="flex items-center gap-3">
-                  <Truck className="h-5 w-5 text-purple-600" />
-                  <span className="text-sm text-gray-600 dark:text-gray-300">
-                    Free delivery inside Kathmandu Valley
-                  </span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Shield className="h-5 w-5 text-purple-600" />
-                  <span className="text-sm text-gray-600 dark:text-gray-300">
-                    100% satisfaction guaranteed
-                  </span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <RotateCcw className="h-5 w-5 text-purple-600" />
-                  <span className="text-sm text-gray-600 dark:text-gray-300">
-                    24-hour return policy
-                  </span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Package className="h-5 w-5 text-purple-600" />
-                  <span className="text-sm text-gray-600 dark:text-gray-300">
-                    Premium quality ingredients
-                  </span>
-                </div>
+                {cake.deliveryInfo?.map((info, index) => {
+                  const IconComponent = {
+                    'Truck': Truck,
+                    'Shield': Shield,
+                    'RotateCcw': RotateCcw,
+                    'Package': Package
+                  }[info.icon] || Truck;
+                  
+                  return (
+                    <div key={index} className="flex items-center gap-3">
+                      <IconComponent className="h-5 w-5 text-purple-600" />
+                      <span className="text-sm text-gray-600 dark:text-gray-300">
+                        {info.text}
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
 
               {/* Category info */}
@@ -345,66 +346,55 @@ const CakeDetails = () => {
             </div>
           </div>
 
-          {/* Additional tabs section */}
-          <div className="border-t border-gray-200 dark:border-gray-700 p-6 lg:p-8">
-            <Tabs defaultValue="details" className="w-full">
-              <TabsList className="grid w-full max-w-md grid-cols-3">
-                <TabsTrigger value="details">Details</TabsTrigger>
-                <TabsTrigger value="nutrition">Nutrition</TabsTrigger>
-                <TabsTrigger value="reviews">Reviews</TabsTrigger>
-              </TabsList>
-              <TabsContent value="details" className="mt-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Product Details</h4>
-                    <ul className="space-y-2 text-gray-600 dark:text-gray-400">
-                      <li>• Fresh sponge layers</li>
-                      <li>• Velvety cream frosting</li>
-                      <li>• Hand-arranged strawberries</li>
-                      <li>• Premium ingredients</li>
-                      <li>• Perfect for celebrations</li>
-                    </ul>
+          {/* Additional tabs section - Using new structure */}
+          <div className="border-t border-gray-600 dark:border-gray-700 p-6 lg:p-8 w-full">
+            <div className="max-w-3xl mx-auto">
+              <Tabs defaultValue="details" className="w-full">
+                <TabsList className="grid w-full max-w-md mx-auto grid-cols-3 mb-15">
+                  <TabsTrigger value="details">Details</TabsTrigger>
+                  <TabsTrigger value="nutrition">Nutrition</TabsTrigger>
+                  <TabsTrigger value="reviews">Reviews</TabsTrigger>
+                </TabsList>
+                <TabsContent value="details" className="mt-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Product Details</h4>
+                      <ul className="space-y-2 text-gray-600 dark:text-gray-400">
+                        {cake.features?.map((feature, index) => (
+                          <li key={index}>• {feature}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Specifications</h4>
+                      <ul className="space-y-2 text-gray-600 dark:text-gray-400">
+                        {cake.specifications?.map((spec, index) => (
+                          <li key={index}>• {spec.label}: {spec.value}</li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Specifications</h4>
-                    <ul className="space-y-2 text-gray-600 dark:text-gray-400">
-                      <li>• Weight: 1 kg (approx)</li>
-                      <li>• Serves: 8-10 people</li>
-                      <li>• Shelf life: 3 days</li>
-                      <li>• Storage: Refrigerate</li>
-                    </ul>
+                </TabsContent>
+                <TabsContent value="nutrition" className="mt-6">
+                  <p className="text-gray-600 dark:text-gray-400">
+                    Nutritional information per serving (100g):
+                  </p>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+                    {cake.nutritionInfo?.map((item, index) => (
+                      <div key={index} className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg text-center">
+                        <p className="text-sm text-gray-500 dark:text-gray-400">{item.label}</p>
+                        <p className="text-lg font-semibold text-gray-900 dark:text-white">{item.value}</p>
+                      </div>
+                    ))}
                   </div>
-                </div>
-              </TabsContent>
-              <TabsContent value="nutrition" className="mt-6">
-                <p className="text-gray-600 dark:text-gray-400">
-                  Nutritional information per serving (100g):
-                </p>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-                  <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg text-center">
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Calories</p>
-                    <p className="text-lg font-semibold text-gray-900 dark:text-white">350 kcal</p>
-                  </div>
-                  <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg text-center">
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Protein</p>
-                    <p className="text-lg font-semibold text-gray-900 dark:text-white">4g</p>
-                  </div>
-                  <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg text-center">
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Carbs</p>
-                    <p className="text-lg font-semibold text-gray-900 dark:text-white">45g</p>
-                  </div>
-                  <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg text-center">
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Fat</p>
-                    <p className="text-lg font-semibold text-gray-900 dark:text-white">18g</p>
-                  </div>
-                </div>
-              </TabsContent>
-              <TabsContent value="reviews" className="mt-6">
-                <p className="text-gray-600 dark:text-gray-400">
-                  Customer reviews coming soon...
-                </p>
-              </TabsContent>
-            </Tabs>
+                </TabsContent>
+                <TabsContent value="reviews" className="mt-6">
+                  <p className="text-gray-600 dark:text-gray-400">
+                    Customer reviews coming soon...
+                  </p>
+                </TabsContent>
+              </Tabs>
+            </div>
           </div>
 
           {/* Related products section */}
@@ -413,7 +403,7 @@ const CakeDetails = () => {
               You Might Also Like
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {cakes?.slice(0, 4).map((relatedCake) => (
+              {relatedProducts?.map((relatedCake) => (
                 <div
                   key={relatedCake.id}
                   className="group cursor-pointer"
@@ -421,7 +411,7 @@ const CakeDetails = () => {
                 >
                   <div className="relative overflow-hidden rounded-lg mb-2">
                     <img
-                      src={relatedCake.avater}
+                      src={relatedCake.avatar}
                       alt={relatedCake.title}
                       className="w-full h-32 object-cover group-hover:scale-110 transition-transform duration-300"
                     />
@@ -430,7 +420,7 @@ const CakeDetails = () => {
                     {relatedCake.title}
                   </h4>
                   <p className="text-sm text-purple-600 dark:text-purple-400">
-                    ${relatedCake.price.toFixed(2)}
+                    ${relatedCake.pricing?.discounted?.toFixed(2) || relatedCake.price?.toFixed(2)}
                   </p>
                 </div>
               ))}
