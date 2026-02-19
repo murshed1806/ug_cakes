@@ -45,10 +45,11 @@ const BestSellers = () => {
       <AllCards 
         title="🔥 Recently Best Sellers"
         subtitle="These trending cakes are flying off our shelves - Don't miss out!"
-        updateTime="Feb 14, 2:14 AM"
+        updateTime={null}
         badge="HOT"
         cakes={cakes || []}
         isLoading={isLoading}
+        left
       />
     </>
   );
