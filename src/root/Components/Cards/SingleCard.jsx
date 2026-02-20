@@ -1,31 +1,38 @@
+// src/components/SingleCard.jsx
 import React from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { ShoppingCart, Truck } from 'lucide-react';
 
 const SingleCard = ({ cakeData }) => {
   if (!cakeData) return null;
 
+  const handleAddToCart = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log("Added to cart:", cakeData);
+  };
+
   return (
     <Link
-      to={`/cake/${cakeData?.id}`}
-      className="border border-gray-200 hover:border-purple-300 cursor-pointer rounded-xl group shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden"
+      to={`/categories/product/${cakeData?.id}`}  // Updated to match new route
+      className="border border-gray-200 hover:border-purple-300 cursor-pointer rounded-xl group shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden block"
     >
-      {/* Image Container */}
       <div className="relative overflow-hidden h-48 sm:h-56">
         <img
           src={cakeData?.avatar}
           alt={cakeData?.title}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+          onError={(e) => {
+            e.target.src = "https://via.placeholder.com/300x200?text=No+Image";
+          }}
         />
         
-        {/* Discount Badge */}
         {cakeData?.pricing?.discountPercentage > 0 && (
           <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
             {cakeData?.pricing?.discountPercentage}% OFF
           </div>
         )}
         
-        {/* Rating Badge */}
         <div className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm text-yellow-600 text-xs font-bold px-2 py-1 rounded-full flex items-center gap-1">
           <span>⭐</span>
           <span>{cakeData?.rating?.value}</span>
@@ -33,17 +40,14 @@ const SingleCard = ({ cakeData }) => {
         </div>
       </div>
 
-      {/* Content Container */}
       <div className="px-3 py-4 space-y-3">
-        {/* Title and Category */}
         <div>
           <h3 className="text-lg font-semibold group-hover:text-purple-600 line-clamp-1">
             {cakeData?.title}
           </h3>
-          <p className="text-xs text-gray-500 mt-1">{cakeData?.category}</p>
+          <p className="text-xs text-gray-500 mt-1 capitalize">{cakeData?.category?.replace('-', ' ')}</p>
         </div>
 
-        {/* Features Tags */}
         <div className="flex flex-wrap gap-1">
           {cakeData?.features?.slice(0, 2).map((feature, index) => (
             <span 
@@ -60,13 +64,11 @@ const SingleCard = ({ cakeData }) => {
           )}
         </div>
 
-        {/* Stock Status */}
         <div className="flex items-center justify-between">
           <p className="bg-orange-100 text-orange-600 w-20 text-center rounded-full text-sm font-medium px-2 py-1">
             🔥 {cakeData?.stock} sold
           </p>
           
-          {/* Stock Availability */}
           {cakeData?.stock > 10 ? (
             <span className="text-green-600 text-xs flex items-center gap-1">
               <span className="w-1.5 h-1.5 bg-green-600 rounded-full"></span>
@@ -85,7 +87,6 @@ const SingleCard = ({ cakeData }) => {
           )}
         </div>
 
-        {/* Price Section */}
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-2xl font-bold text-purple-600">
@@ -98,13 +99,14 @@ const SingleCard = ({ cakeData }) => {
             )}
           </div>
           
-          {/* Add to Cart Button */}
-          <button className="bg-purple-600 hover:bg-purple-700 text-white p-2 rounded-full transition-colors">
+          <button 
+            onClick={handleAddToCart}
+            className="bg-purple-600 hover:bg-purple-700 text-white p-2 rounded-full transition-colors"
+          >
             <ShoppingCart className="h-4 w-4" />
           </button>
         </div>
 
-        {/* Delivery Info */}
         <p className="text-xs text-gray-500 flex items-center gap-1">
           <Truck className="h-3 w-3" />
           Free delivery

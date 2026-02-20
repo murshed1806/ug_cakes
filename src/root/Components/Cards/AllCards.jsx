@@ -1,3 +1,4 @@
+// src/components/AllCards.jsx
 import React, { useState, useEffect } from 'react';
 import SingleCard from './SingleCard';
 
@@ -11,22 +12,26 @@ const AllCards = ({
   initialDesktop = 12,
   initialLaptop = 8,
   initialMobile = 6,
-  left = false // New prop for left alignment
+  left = false
 }) => {
   
   const [showAll, setShowAll] = useState(false);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
 
-  // Determine initial card count based on screen size
+  // Debug: Log what cakes we're receiving
+  // console.log(`AllCards (${title}) - cakes:`, cakes);
+  // if (cakes.length > 0) {
+  //   console.log(`AllCards (${title}) - first cake structure:`, cakes[0]);
+  // }
+
   const getInitialCount = () => {
-    if (windowWidth < 640) return initialMobile; // mobile
-    if (windowWidth < 1024) return initialLaptop; // laptop/tablet
-    return initialDesktop; // desktop
+    if (windowWidth < 640) return initialMobile;
+    if (windowWidth < 1024) return initialLaptop;
+    return initialDesktop;
   };
 
   const [visibleCount, setVisibleCount] = useState(getInitialCount());
 
-  // Update window width on resize
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
@@ -39,7 +44,6 @@ const AllCards = ({
     return () => window.removeEventListener('resize', handleResize);
   }, [showAll]);
 
-  // Update visible count when window width changes and not showing all
   useEffect(() => {
     if (!showAll) {
       setVisibleCount(getInitialCount());
@@ -54,17 +58,15 @@ const AllCards = ({
   const handleViewLess = () => {
     setShowAll(false);
     setVisibleCount(getInitialCount());
-    // Scroll to top of section smoothly
     document.getElementById(`section-${title.replace(/\s+/g, '-')}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-  // Responsive grid classes
   const getGridClass = () => {
-    if (windowWidth < 480) return "grid-cols-1"; // Very small devices
-    if (windowWidth < 640) return "grid-cols-2"; // Small mobile
-    if (windowWidth < 768) return "grid-cols-2"; // Mobile
-    if (windowWidth < 1024) return "grid-cols-3"; // Tablet
-    return "grid-cols-4"; // Desktop
+    if (windowWidth < 480) return "grid-cols-1";
+    if (windowWidth < 640) return "grid-cols-2";
+    if (windowWidth < 768) return "grid-cols-2";
+    if (windowWidth < 1024) return "grid-cols-3";
+    return "grid-cols-4";
   };
 
   if (isLoading) {
@@ -97,10 +99,8 @@ const AllCards = ({
 
   return (
     <div className="my-8 sm:my-10 md:my-14" id={`section-${title.replace(/\s+/g, '-')}`}>
-      {/* Header Section - Only show if at least title exists */}
       {(title || subtitle || badge || updateTime) && (
         <div className={`flex flex-col ${left ? 'items-start' : 'items-center'} mb-6 sm:mb-8 px-4`}>
-          {/* Title and Badge - Show if title exists */}
           {(title || badge) && (
             <div className={`flex flex-col sm:flex-row ${left ? 'items-start' : 'items-center'} gap-2 sm:gap-3 relative`}>
               {title && (
@@ -116,14 +116,12 @@ const AllCards = ({
             </div>
           )}
           
-          {/* Subtitle - Show if exists */}
           {subtitle && (
             <p className={`text-xs sm:text-sm md:text-base text-gray-600 mt-2 max-w-[280px] sm:max-w-md md:max-w-lg ${left ? 'text-left' : 'text-center'}`}>
               {subtitle}
             </p>
           )}
           
-          {/* Update Time - Show if exists */}
           {updateTime && (
             <p className={`text-[10px] sm:text-xs text-gray-400 mt-1 ${left ? 'text-left' : 'text-center'}`}>
               Last updated: {updateTime}
@@ -132,15 +130,29 @@ const AllCards = ({
         </div>
       )}
 
-      {/* Cards Grid */}
       <div className={`grid ${getGridClass()} gap-2 sm:gap-3 md:gap-4 lg:gap-6 px-2 sm:px-3 md:px-4`}>
-        {visibleCakes.map((cake) => {
-          const cakeData = cake.cakeDetails;
-          return <SingleCard key={cakeData?.id} cakeData={cakeData} />;
+        {visibleCakes.map((cake, index) => {
+          // Try to get the correct data structure
+          let cakeData = cake;
+          
+          // If cake has cakeDetails property, use that
+          if (cake.cakeDetails) {
+            cakeData = cake.cakeDetails;
+          }
+          
+          // Log each cake being rendered
+          // console.log(`Rendering cake ${index}:`, cakeData);
+          
+          // Check if cakeData has required properties
+          if (!cakeData || !cakeData.id) {
+            console.warn('Invalid cake data:', cake);
+            return null;
+          }
+          
+          return <SingleCard key={cakeData.id} cakeData={cakeData} />;
         })}
       </div>
 
-      {/* View More / View Less Button */}
       {cakes.length > getInitialCount() && (
         <div className={`flex ${left ? 'justify-start' : 'justify-center'} mt-6 sm:mt-8 md:mt-10 px-4`}>
           {!showAll ? (
@@ -177,7 +189,6 @@ const AllCards = ({
         </div>
       )}
 
-      {/* Showing count indicator */}
       <div className={`text-[10px] sm:text-xs text-gray-400 mt-3 sm:mt-4 ${left ? 'text-left px-4' : 'text-center'}`}>
         Showing {visibleCakes.length} of {cakes.length} cakes
       </div>
