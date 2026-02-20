@@ -170,29 +170,33 @@ export default function CategoryDetailsPage() {
         ) : null;
       })}
 
-      {relatedCategories.length > 0 && (
-        <div className="mt-12">
-          <AllCards 
-            title="🔗 Related Categories"
-            subtitle="You might also like"
-            cakes={relatedCategories.map(relCat => ({
-              id: relCat.id,
-              title: relCat.name,
-              avatar: relCat.image,
-              category: relCat.type,
-              description: relCat.description,
-              rating: { value: 4.5, count: 100 },
-              pricing: { discounted: 0 },
-              features: [],
-              stock: relCat.productCount
-            }))}
-            initialDesktop={3}
-            initialLaptop={2}
-            initialMobile={1}
-            left={true}
-          />
-        </div>
-      )}
+     {relatedCategories.length > 0 && (
+  <div className="mt-12">
+    <AllCards 
+      title="🔗 Related Categories"
+      subtitle="You might also like"
+      cakes={relatedCategories.map(relCat => ({
+        id: relCat.id,
+        title: relCat.name,
+        avatar: relCat.image, // This should work if relCat.image has a valid URL
+        category: relCat.type,
+        description: relCat.description,
+        rating: { value: 4.5, count: 100 },
+        pricing: { 
+          discounted: 0,
+          original: 0 
+        },
+        features: [],
+        stock: relCat.productCount || 0,
+        customizable: false // Adding this to prevent undefined
+      }))}
+      initialDesktop={3}
+      initialLaptop={2}
+      initialMobile={1}
+      left={true}
+    />
+  </div>
+)}
     </div>
   );
 }

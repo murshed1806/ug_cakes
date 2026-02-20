@@ -127,6 +127,7 @@ const AllCards = ({
       <div className={`grid ${getGridClass()} gap-2 sm:gap-3 md:gap-4 lg:gap-6 px-2 sm:px-3 md:px-4`}>
         {visibleCakes.map((cake) => {
           const cakeData = cake.cakeDetails || cake;
+          
           return <SingleCard key={cakeData?.id} cakeData={cakeData} />;
         })}
       </div>
