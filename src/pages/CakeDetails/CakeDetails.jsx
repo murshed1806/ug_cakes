@@ -1,3 +1,4 @@
+// src/pages/CakeDitails/CakeDitails.jsx
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import React, { useState } from 'react';
@@ -22,6 +23,8 @@ import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from '@/Hooks/use-toast';
+import CategoryBreadcrumb from '@/root/Components/Category/CategoryBreadcrumb';
+// import CategoryBreadcrumb from '@/components/CategoryBreadcrumb'; // Import the breadcrumb
 
 const CakeDetails = () => {
   const { id } = useParams();
@@ -95,6 +98,7 @@ const CakeDetails = () => {
   if (isLoading) {
     return (
       <div className="container mx-auto px-4 py-8">
+        <Skeleton className="h-6 w-64 mb-4" /> {/* Breadcrumb skeleton */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           <Skeleton className="h-[400px] lg:h-[600px] w-full rounded-xl" />
           <div className="space-y-4">
@@ -122,11 +126,9 @@ const CakeDetails = () => {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
       <div className="container mx-auto px-4">
-        {/* Breadcrumb */}
-        <div className="text-sm text-gray-500 dark:text-gray-400 mb-6">
-          <span className="hover:text-purple-600 cursor-pointer">Home</span> / 
-          <span className="hover:text-purple-600 cursor-pointer">Cakes</span> / 
-          <span className="text-gray-700 dark:text-gray-300 font-medium">{cake.title}</span>
+        {/* Breadcrumb - Using the CategoryBreadcrumb component */}
+        <div className="mb-6">
+          <CategoryBreadcrumb />
         </div>
 
         <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">

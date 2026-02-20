@@ -6,7 +6,7 @@ const OfferBadge = () => {
     <div className="flex items-center justify-between bg-purple-100 dark:bg-purple-900/30 border border-purple-300 dark:border-purple-700 rounded-full px-3 py-1.5 w-full max-w-[240px] hover:bg-purple-200 dark:hover:bg-purple-900/50 transition cursor-pointer h-[44px]">
       <div className="flex items-center gap-2">
         <img
-          src="https://i.ibb.co/3R9W2sK/cake.png"
+          src="https://media.ugcakes.com/occasions/extra-small/holi-31761705806-tgUU1Gns4r.webp"
           alt="offer"
           className="w-8 h-8 rounded-full border dark:border-gray-600"
         />

@@ -7,8 +7,11 @@ import {
   SheetContent,
   SheetTrigger,
   SheetClose,
+  SheetTitle,
+  SheetDescription,
 } from "@/components/ui/sheet";
 import ThemeToggle from "./ThemeToggle";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
 const MobileLeftSheet = ({ navLinks }) => {
   return (
@@ -26,6 +29,16 @@ const MobileLeftSheet = ({ navLinks }) => {
         side="left"
         className="w-[300px] sm:w-[350px] p-0 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800"
       >
+        {/* Hidden Title for Accessibility - Fixed VisuallyHidden usage */}
+        <VisuallyHidden.Root asChild>
+          <SheetTitle>Navigation Menu</SheetTitle>
+        </VisuallyHidden.Root>
+        <VisuallyHidden.Root asChild>
+          <SheetDescription>
+            Browse through categories and access your account
+          </SheetDescription>
+        </VisuallyHidden.Root>
+
         <div className="flex flex-col h-full">
           {/* Mobile Logo in Sheet */}
           <div className="p-6 border-b border-gray-200 dark:border-gray-800">
@@ -67,17 +80,17 @@ const MobileLeftSheet = ({ navLinks }) => {
               className="w-full justify-start gap-3 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
             >
               <User className="h-5 w-5" />
-              Account
+              <span>Account</span>
             </Button>
             <Button
               variant="outline"
               className="w-full justify-start gap-3 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
             >
               <ShoppingCart className="h-5 w-5" />
-              Cart (0)
+              <span>Cart (0)</span>
             </Button>
             
-            {/* Theme Toggle - Added at the bottom */}
+            {/* Theme Toggle */}
             <div className="flex items-center justify-between pt-2 mt-2 border-t border-gray-200 dark:border-gray-800">
               <span className="text-sm text-gray-600 dark:text-gray-400">Theme</span>
               <ThemeToggle />
@@ -85,7 +98,6 @@ const MobileLeftSheet = ({ navLinks }) => {
           </div>
         </div>
       </SheetContent>
-      
     </Sheet>
   );
 };
