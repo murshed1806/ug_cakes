@@ -18,6 +18,12 @@ const AllCards = ({
   const [showAll, setShowAll] = useState(false);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
 
+  // Debug: Log what cakes we're receiving
+  console.log(`AllCards (${title}) - cakes:`, cakes);
+  if (cakes.length > 0) {
+    console.log(`AllCards (${title}) - first cake structure:`, cakes[0]);
+  }
+
   const getInitialCount = () => {
     if (windowWidth < 640) return initialMobile;
     if (windowWidth < 1024) return initialLaptop;
@@ -125,10 +131,25 @@ const AllCards = ({
       )}
 
       <div className={`grid ${getGridClass()} gap-2 sm:gap-3 md:gap-4 lg:gap-6 px-2 sm:px-3 md:px-4`}>
-        {visibleCakes.map((cake) => {
-          const cakeData = cake.cakeDetails || cake;
+        {visibleCakes.map((cake, index) => {
+          // Try to get the correct data structure
+          let cakeData = cake;
           
-          return <SingleCard key={cakeData?.id} cakeData={cakeData} />;
+          // If cake has cakeDetails property, use that
+          if (cake.cakeDetails) {
+            cakeData = cake.cakeDetails;
+          }
+          
+          // Log each cake being rendered
+          console.log(`Rendering cake ${index}:`, cakeData);
+          
+          // Check if cakeData has required properties
+          if (!cakeData || !cakeData.id) {
+            console.warn('Invalid cake data:', cake);
+            return null;
+          }
+          
+          return <SingleCard key={cakeData.id} cakeData={cakeData} />;
         })}
       </div>
 

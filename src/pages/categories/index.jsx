@@ -2,11 +2,21 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
-import { categories, getPopularProducts } from "@/data/data";
+import { categories, getPopularProducts, getProductsByCategory } from "@/data/data";
 import AllCards from "@/root/Components/Cards/AllCards";
 
 export default function CategoriesPage() {
   const popularProducts = getPopularProducts(8);
+  console.log("Popular products:", popularProducts);
+
+  // Calculate actual product count for each category
+  const categoriesWithCounts = categories.map(category => {
+    const productsInCategory = getProductsByCategory(category.id);
+    return {
+      ...category,
+      actualProductCount: productsInCategory.length
+    };
+  });
 
   return (
     <div>
@@ -20,7 +30,7 @@ export default function CategoriesPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
-        {categories.map((category) => (
+        {categoriesWithCounts.map((category) => (
           <Link 
             key={category.id} 
             to={`/categories/${category.slug}`}
@@ -48,7 +58,7 @@ export default function CategoriesPage() {
                 </p>
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-medium text-gray-500">
-                    {category.productCount} Products
+                    {category.actualProductCount} Products
                   </span>
                   <span className="text-purple-600 group-hover:translate-x-1 transition-transform">
                     View All →

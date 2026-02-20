@@ -1,14 +1,17 @@
-// src/components/category-specific/BirthdaySpecial.jsx
 import React from 'react';
 import { Gift, Cake, Star } from 'lucide-react';
 import AllCards from './../../Cards/AllCards';
 
 export default function BirthdaySpecial({ category, products, specificData }) {
+  // Fix the filter - remove tags check since it doesn't exist
   const birthdaySpecials = products.filter(p => 
     p.cakeDetails.title.toLowerCase().includes('birthday') ||
-    p.cakeDetails.tags?.includes('birthday')
+    p.cakeDetails.category?.toLowerCase().includes('birthday') // Check category instead
   );
-
+  
+  console.log("birthday products:", birthdaySpecials); // This should now show products
+  console.log("all products:", products); // Check if products are being passed correctly
+  
   return (
     <div className="mt-12 space-y-8">
       <div className="bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg p-8 text-white">
@@ -43,7 +46,7 @@ export default function BirthdaySpecial({ category, products, specificData }) {
         ))}
       </div>
 
-      {birthdaySpecials.length > 0 && (
+      {birthdaySpecials.length > 0 ? (
         <AllCards 
           title="🎉 Top Birthday Picks"
           subtitle="Most loved birthday cakes this month"
@@ -54,6 +57,10 @@ export default function BirthdaySpecial({ category, products, specificData }) {
           initialMobile={2}
           left={true}
         />
+      ) : (
+        <div className="text-center py-8 text-gray-500">
+          No birthday specials found
+        </div>
       )}
 
       <div className="bg-purple-50 rounded-lg p-6">

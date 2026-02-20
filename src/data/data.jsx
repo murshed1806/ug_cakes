@@ -367,7 +367,7 @@ export const products = [
         "Experience the elegance of our Rose Garden cake, a perfect blend of delicate flavors and stunning design. Fresh, premium ingredients for an unforgettable taste. Beautifully crafted with artistic rose decorations. Perfect for birthdays, anniversaries, and special occasions. Fast and reliable delivery within Kathmandu Valley.y Order now to celebrate your moments with sweetness and style",
       customizable: true,
       SKU: "SKU: UGC-B-1115",
-      category: "cake",
+      category: "wedding-cakes",
       stock: 15,
       rating: {
         value: 4.8,
@@ -427,7 +427,7 @@ export const products = [
         "Experience the elegance of our Rose Garden cake, a perfect blend of delicate flavors and stunning design. Fresh, premium ingredients for an unforgettable taste. Beautifully crafted with artistic rose decorations. Perfect for birthdays, anniversaries, and special occasions. Fast and reliable delivery within Kathmandu Valle.y Order now to celebrate your moments with sweetness and style",
       customizable: true,
       SKU: "SKU: UGC-B-1013",
-      category: "Cakes",
+      category: "wedding-cakes",
       stock: 18,
       rating: {
         value: 4.9,
@@ -487,7 +487,7 @@ export const products = [
         "Red Velvet Cupcakes for your special day. Cupcakes make people happy, and these sweet recipes are guaranteed to put a smile on any face. These delicious cupcakes can also be a satisfying dessert of yours. This does not just taste delicious, but also looks eye pleasing. The cake can be delivered online, which is the best online cake delivery service in Kathmandu. All cakes are baked with hygiene and quality in the top of our priority at our own state-of-the-art baking facility and quality checked twice by our expert QC team before delivery. You can send cakes or gifts to your loved ones in Nepal or shop online for yourself in Nepal with UG Bazaar, a pioneer in online shopping in Nepal.",
       customizable: true,
       SKU: "SKU: UGC-CC-REDVELVET",
-      category: "cupcake",
+      category: "kids-cakes",
       stock: 12,
       rating: {
         value: 4.7,
@@ -547,7 +547,7 @@ export const products = [
         "This beautiful classic chocolate cake is for chocolate lovers. It is sure that this cake will melt the hearts of every guest at the celebrations. It is topped with choco wafer and bark. This cake not only tastes delicious, but also looks eye-pleasing. The cake can be delivered online, which is the best online cake delivery service in Kathmandu. All cakes are baked with hygiene and quality in the top of our priority at our own state-of-the-art baking facility and quality checked twice by our expert QC team before delivery. You can send cakes or gifts to your loved ones in Nepal or shop online for yourself in Nepal with UG Bazaar, a pioneer in online shopping in Nepal.",
       customizable: true,
       SKU: "SKU: UGC-C-190",
-      category: "Cakes",
+      category: "kids-cakes",
       stock: 10,
       rating: {
         value: 4.6,
@@ -607,7 +607,7 @@ export const products = [
         "Indulge in the exquisite fusion of tradition and innovation with our Rasmalai Cake adorned with delicate floral and pearl detailing. Crafted with care by the finest bakers at UGCakes, renowned as the best bakery in Kathmandu, this delectable creation promises a symphony of flavors that will tantalize your taste buds. Elevate your celebrations with a cake that seamlessly marries the rich, creamy essence of Rasmalai with the irresistible allure of a classic cake. Treat yourself to the best of both worlds and make every moment unforgettable with our signature Rasmalai Cake. Order now and experience the epitome of cake perfection. Every details used in cake is edible and made out of sponges and creams. All cakes are baked with hygiene and quality at the top of our priority at our own state-of-the-art baking facility and quality is checked twice by our expert QC team before delivery. You can send cakes or gifts to your loved ones in Nepal or shop online for yourself in Nepal with UG Bazaar, a pioneer in online shopping in Nepal.",
       customizable: true,
       SKU: "SKU: UGC-B-604",
-      category: "Cakes",
+      category: "anniversary",
       stock: 22,
       rating: {
         value: 4.8,
@@ -667,7 +667,7 @@ export const products = [
         "A pretty birthday cake for daughters, featuring a lovely 'Happy Birthday Daughter' message. Pink ombre cake with vanilla buttercream and edible glitter.",
       customizable: true,
       SKU: "SKU: UG-CM",
-      category: "cupcake",
+      category: "anniversary",
       stock: 18,
       rating: {
         value: 4.9,
@@ -727,7 +727,7 @@ export const products = [
         "A cool birthday cake for brothers, featuring a trendy 'Happy Birthday Brother' design. Black forest cake with cherry filling and chocolate shavings.",
       customizable: true,
       SKU: "UGC-BB-8890",
-      category: "Birthday Cakes",
+      category: "cookie",
       stock: 16,
       rating: {
         value: 4.7,
@@ -787,7 +787,7 @@ export const products = [
         "A beautiful birthday cake for sisters, featuring a lovely 'Happy Birthday Sister' message. Strawberry cake with fresh strawberry filling and pink frosting.",
       customizable: true,
       SKU: "UGC-BS-9901",
-      category: "Birthday Cakes",
+      category: "cupcake",
       stock: 20,
       rating: {
         value: 4.8,
@@ -847,7 +847,7 @@ export const products = [
         "An elegant anniversary cake featuring 'Happy Anniversary' message with romantic rose decorations. Red velvet cake with cream cheese frosting and edible pearls.",
       customizable: true,
       SKU: "UGC-HA-1012",
-      category: "Anniversary Cakes",
+      category: "cupcake",
       stock: 8,
       rating: {
         value: 4.9,
@@ -907,7 +907,7 @@ export const products = [
         "A heartwarming birthday cake for grandpa, featuring a special 'Happy Birthday Grandpa' message. Classic vanilla cake with caramel filling and walnut topping.",
       customizable: true,
       SKU: "UGC-BG-1123",
-      category: "Birthday Cakes",
+      category: "kids",
       stock: 14,
       rating: {
         value: 4.7,
@@ -967,7 +967,7 @@ export const products = [
         "A sweet birthday cake for grandma, featuring a loving 'Happy Birthday Grandma' message. Lemon cake with elderflower buttercream and edible flowers.",
       customizable: true,
       SKU: "UGC-BG-1224",
-      category: "Birthday Cakes",
+      category: "anniversary-cakes",
       stock: 16,
       rating: {
         value: 4.8,
@@ -1088,7 +1088,7 @@ export const faqs = [
     question: "How should I store the cake?",
     answer:
       "Keep refrigerated and consume within 3 days for best taste. Let it sit at room temperature for 30 minutes before serving.",
-    category: "Storage",
+    category: "pastry",
   },
   {
     id: 6,
@@ -1096,7 +1096,7 @@ export const faqs = [
     question: "Is this cake eggless?",
     answer:
       "No, this cake contains eggs. We do have eggless options available in our collection.",
-    category: "Dietary",
+    category: "anniversary-cakes",
   },
 ];
 
@@ -1112,9 +1112,17 @@ export const getCategoryById = (id) => {
   return categories.find((cat) => cat.id === id);
 };
 
-// Get products by category ID
+// FIXED: Get products by category ID
 export const getProductsByCategory = (categoryId) => {
-  return products.filter((p) => p.cakeDetails.categoryId === categoryId);
+  // First get the category to know its slug
+  const category = getCategoryById(categoryId);
+  if (!category) return [];
+  
+  // Filter products by matching the category slug
+  return products.filter((p) => {
+    // Check if the product's category matches the category slug
+    return p.cakeDetails.category === category.slug;
+  });
 };
 
 // Get product by ID
@@ -1122,9 +1130,9 @@ export const getProductById = (id) => {
   return products.find((p) => p.cakeDetails.id === parseInt(id));
 };
 
-// Get related categories for a category
+// FIXED: Get related categories for a category
 export const getRelatedCategories = (categoryId) => {
-  const relatedIds = relatedCategoriesMap[categoryId] || [];
+  const relatedIds = CategoriesMap[categoryId] || [];
   return relatedIds.map((id) => getCategoryById(id)).filter(Boolean);
 };
 
@@ -1165,7 +1173,7 @@ export const getAllProductCategories = () => {
   });
 };
 
-// Get popular products (by rating)
+// FIXED: Get popular products (by rating)
 export const getPopularProducts = (limit = 8) => {
   return [...products]
     .sort((a, b) => b.cakeDetails.rating.value - a.cakeDetails.rating.value)
