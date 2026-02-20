@@ -62,6 +62,17 @@ export const navigateLinks = [
     path: "/careers",
   },
 ];
+// Helper function to get category by ID (add this to data.js if not exists)
+const categoriesList = [
+  { id: 1, name: "Birthday Cakes", slug: "birthday-cakes" },
+  { id: 2, name: "Wedding Cakes", slug: "wedding-cakes" },
+  { id: 3, name: "Anniversary Cakes", slug: "anniversary-cakes" },
+  { id: 4, name: "Kids Cakes", slug: "kids-cakes" },
+  { id: 5, name: "Photo Cakes", slug: "photo-cakes" },
+  { id: 6, name: "Cupcakes", slug: "cupcakes" },
+  { id: 7, name: "Pastries", slug: "pastries" },
+  { id: 8, name: "Cookies", slug: "cookies" },
+];
 // data.js - Complete data file for the e-commerce category system
 
 // ==================== CATEGORIES DATA ====================
@@ -157,7 +168,7 @@ export const categories = [
     name: "Kids Cakes",
     slug: "kids-cakes",
     description: "Fun and colorful cakes for little ones",
-    image: "https://i.pinimg.com/originals/3c/33/22/3c3322359b6431d7b573ecd8c14981bf.jpg",
+    image: "https://tse4.mm.bing.net/th/id/OIP.tT2QO3csQTo51eqNY-I6lQHaJ_?rs=1&pid=ImgDetMain&o=7&rm=3",
     productCount: 20,
     type: "Cakes",
     metaTitle: "Kids Cakes - Fun Designs for Children",

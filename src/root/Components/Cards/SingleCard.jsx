@@ -8,12 +8,13 @@ const SingleCard = ({ cakeData }) => {
 
   const handleAddToCart = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     console.log("Added to cart:", cakeData);
   };
 
   return (
     <Link
-      to={`/cake/${cakeData?.id}`}
+      to={`/categories/product/${cakeData?.id}`}  // Updated to match new route
       className="border border-gray-200 hover:border-purple-300 cursor-pointer rounded-xl group shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden block"
     >
       <div className="relative overflow-hidden h-48 sm:h-56">
@@ -21,6 +22,9 @@ const SingleCard = ({ cakeData }) => {
           src={cakeData?.avatar}
           alt={cakeData?.title}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+          onError={(e) => {
+            e.target.src = "https://via.placeholder.com/300x200?text=No+Image";
+          }}
         />
         
         {cakeData?.pricing?.discountPercentage > 0 && (
@@ -41,7 +45,7 @@ const SingleCard = ({ cakeData }) => {
           <h3 className="text-lg font-semibold group-hover:text-purple-600 line-clamp-1">
             {cakeData?.title}
           </h3>
-          <p className="text-xs text-gray-500 mt-1">{cakeData?.category}</p>
+          <p className="text-xs text-gray-500 mt-1 capitalize">{cakeData?.category?.replace('-', ' ')}</p>
         </div>
 
         <div className="flex flex-wrap gap-1">

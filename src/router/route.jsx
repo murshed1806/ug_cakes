@@ -1,20 +1,20 @@
-import { createBrowserRouter } from "react-router"
-import RootLayout from "../Layouts/RootLayout"
-import Home from "../pages/home/Home"
-import Login from "@/pages/Login/Login"
-import Register from "@/pages/Register/Register"
-import AdminPanel from "@/pages/admin-panel/AdminPanel"
-import NotFoundPage from "@/pages/error/NotFoundPage"
-import CakeDetails from "@/pages/CakeDetails/CakeDetails"
-import CategoryLayout from "@/Layouts/CategoryLayout"
-import CategoriesPage from "@/pages/categories"
-import CategoryDetailsPage from "@/pages/categories/[categoryId]"
+import { createBrowserRouter } from "react-router";
+import RootLayout from "../Layouts/RootLayout";
+import Home from "../pages/home/Home";
+import Login from "@/pages/Login/Login";
+import Register from "@/pages/Register/Register";
+import AdminPanel from "@/pages/admin-panel/AdminPanel";
+import NotFoundPage from "@/pages/error/NotFoundPage";
+import CakeDetails from "@/pages/CakeDetails/CakeDetails";
+import CategoryLayout from "@/Layouts/CategoryLayout";
+import CategoriesPage from "@/pages/categories";
+import CategoryDetailsPage from "@/pages/categories/[categoryId]";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
-    errorElement:<NotFoundPage/>,
+    errorElement: <NotFoundPage />,
     children: [
       {
         index: true,
@@ -30,39 +30,32 @@ const router = createBrowserRouter([
       },
       {
         path: "/register",
-        element: 
-        <>
-        <Register />
-        
-        </>
-        ,
+        element: <Register />,
+      },
+    ],
+  },
+  {
+    path: "/categories",
+    element: <CategoryLayout />,
+    children: [
+      {
+        index: true,
+        element: <CategoriesPage />,
       },
       {
-        path: "/cake/:id",
-        // find one cake for url id
-        // loader: async ({params}) => fetch('/cakes.json')
+        path: ":categoryId",
+        element: <CategoryDetailsPage />,
+      },
+      {
+        path: "product/:productId", // Changed to 'product/' prefix to avoid conflict
         element: <CakeDetails />,
       },
     ],
   },
- {
-        path: "/categories",
-        element: <CategoryLayout />,
-        children: [
-          {
-            index: true,
-            element: <CategoriesPage />,
-          },
-          {
-            path: ":categoryId",
-            element: <CategoryDetailsPage />,
-          },
-        ],
-      },
   {
     path: "/admin-panel",
     element: <AdminPanel />,
   },
-])
+]);
 
-export default router
+export default router;

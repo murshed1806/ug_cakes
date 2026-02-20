@@ -19,10 +19,10 @@ const AllCards = ({
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
 
   // Debug: Log what cakes we're receiving
-  console.log(`AllCards (${title}) - cakes:`, cakes);
-  if (cakes.length > 0) {
-    console.log(`AllCards (${title}) - first cake structure:`, cakes[0]);
-  }
+  // console.log(`AllCards (${title}) - cakes:`, cakes);
+  // if (cakes.length > 0) {
+  //   console.log(`AllCards (${title}) - first cake structure:`, cakes[0]);
+  // }
 
   const getInitialCount = () => {
     if (windowWidth < 640) return initialMobile;
@@ -141,7 +141,7 @@ const AllCards = ({
           }
           
           // Log each cake being rendered
-          console.log(`Rendering cake ${index}:`, cakeData);
+          // console.log(`Rendering cake ${index}:`, cakeData);
           
           // Check if cakeData has required properties
           if (!cakeData || !cakeData.id) {

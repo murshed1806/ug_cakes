@@ -61,7 +61,7 @@ const CategoryBreadcrumb = () => {
 
   return (
     <nav
-      className="flex items-center text-sm text-gray-600 dark:text-gray-400"
+      className="flex items-center text-sm text-gray-600 dark:text-gray-400 pb-6"
       aria-label="Breadcrumb"
     >
       <ol className="flex flex-wrap items-center gap-1">

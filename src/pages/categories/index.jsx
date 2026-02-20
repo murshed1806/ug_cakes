@@ -7,7 +7,7 @@ import AllCards from "@/root/Components/Cards/AllCards";
 
 export default function CategoriesPage() {
   const popularProducts = getPopularProducts(8);
-  console.log("Popular products:", popularProducts);
+  // console.log("Popular products:", popularProducts);
 
   // Calculate actual product count for each category
   const categoriesWithCounts = categories.map(category => {

@@ -9,7 +9,6 @@ import {
   getRelatedCategories 
 } from "../../data/data";
 import AllCards from "@/root/Components/Cards/AllCards";
-import CategoryFilter from "@/root/Components/Category/CategoryFilter";
 import CategoryHero from "@/root/Components/Category/CategoryHero";
 import BirthdaySpecial from "@/root/Components/Category/category-specific/BirthdaySpecial";
 import WeddingSpecial from "@/root/Components/Category/category-specific/WeddingSpecial";
@@ -39,13 +38,7 @@ export default function CategoryDetailsPage() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [relatedCategories, setRelatedCategories] = useState([]);
-  const [filters, setFilters] = useState({
-    sortBy: "popular",
-    priceRange: [0, 200],
-    customizable: false,
-    inStock: false,
-    dietary: []
-  });
+  const [sortBy, setSortBy] = useState("popular");
 
   useEffect(() => {
     const fetchCategoryData = () => {
@@ -77,37 +70,30 @@ export default function CategoryDetailsPage() {
   useEffect(() => {
     if (!products.length) return;
 
-    let filtered = [...products];
+    let sorted = [...products];
 
-    if (filters.customizable) {
-      filtered = filtered.filter(p => p.cakeDetails.customizable);
-    }
-    
-    if (filters.inStock) {
-      filtered = filtered.filter(p => p.cakeDetails.stock > 0);
-    }
-    
-    filtered = filtered.filter(p => 
-      p.cakeDetails.pricing.discounted >= filters.priceRange[0] && 
-      p.cakeDetails.pricing.discounted <= filters.priceRange[1]
-    );
-
-    switch (filters.sortBy) {
+    switch (sortBy) {
+      case "name-asc":
+        sorted.sort((a, b) => a.cakeDetails.title.localeCompare(b.cakeDetails.title));
+        break;
+      case "name-desc":
+        sorted.sort((a, b) => b.cakeDetails.title.localeCompare(a.cakeDetails.title));
+        break;
       case "price-low":
-        filtered.sort((a, b) => a.cakeDetails.pricing.discounted - b.cakeDetails.pricing.discounted);
+        sorted.sort((a, b) => a.cakeDetails.pricing.discounted - b.cakeDetails.pricing.discounted);
         break;
       case "price-high":
-        filtered.sort((a, b) => b.cakeDetails.pricing.discounted - a.cakeDetails.pricing.discounted);
+        sorted.sort((a, b) => b.cakeDetails.pricing.discounted - a.cakeDetails.pricing.discounted);
         break;
       case "rating":
-        filtered.sort((a, b) => b.cakeDetails.rating.value - a.cakeDetails.rating.value);
+        sorted.sort((a, b) => b.cakeDetails.rating.value - a.cakeDetails.rating.value);
         break;
-      default:
-        filtered.sort((a, b) => b.cakeDetails.rating.count - a.cakeDetails.rating.count);
+      default: // popular
+        sorted.sort((a, b) => b.cakeDetails.rating.count - a.cakeDetails.rating.count);
     }
 
-    setFilteredProducts(filtered);
-  }, [filters, products]);
+    setFilteredProducts(sorted);
+  }, [sortBy, products]);
 
   if (loading) {
     return (
@@ -134,15 +120,30 @@ export default function CategoryDetailsPage() {
 
       <CategoryHero category={category} />
 
-      <div className="flex flex-col lg:flex-row gap-8">
-        <div className="lg:w-80">
-          <CategoryFilter 
-            filters={filters} 
-            setFilters={setFilters} 
-            category={category}
-          />
+      <div className="flex flex-col gap-4">
+        {/* Simple Sort Dropdown */}
+        <div className="flex justify-end items-center">
+          <div className="flex items-center gap-2">
+            <label htmlFor="sort" className="text-sm text-gray-600 font-medium">
+              Sort by:
+            </label>
+            <select
+              id="sort"
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent bg-white"
+            >
+              <option value="popular">Most Popular</option>
+              <option value="rating">Highest Rated</option>
+              <option value="name-asc">Name: A to Z</option>
+              <option value="name-desc">Name: Z to A</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+            </select>
+          </div>
         </div>
 
+        {/* Products Grid */}
         <div className="flex-1">
           <AllCards 
             title={`${category.name} (${filteredProducts.length})`}
@@ -170,33 +171,33 @@ export default function CategoryDetailsPage() {
         ) : null;
       })}
 
-     {relatedCategories.length > 0 && (
-  <div className="mt-12">
-    <AllCards 
-      title="🔗 Related Categories"
-      subtitle="You might also like"
-      cakes={relatedCategories.map(relCat => ({
-        id: relCat.id,
-        title: relCat.name,
-        avatar: relCat.image, // This should work if relCat.image has a valid URL
-        category: relCat.type,
-        description: relCat.description,
-        rating: { value: 4.5, count: 100 },
-        pricing: { 
-          discounted: 0,
-          original: 0 
-        },
-        features: [],
-        stock: relCat.productCount || 0,
-        customizable: false // Adding this to prevent undefined
-      }))}
-      initialDesktop={3}
-      initialLaptop={2}
-      initialMobile={1}
-      left={true}
-    />
-  </div>
-)}
+      {relatedCategories.length > 0 && (
+        <div className="mt-12">
+          <AllCards 
+            title="🔗 Related Categories"
+            subtitle="You might also like"
+            cakes={relatedCategories.map(relCat => ({
+              id: relCat.id,
+              title: relCat.name,
+              avatar: relCat.image,
+              category: relCat.type,
+              description: relCat.description,
+              rating: { value: 4.5, count: 100 },
+              pricing: { 
+                discounted: 0,
+                original: 0 
+              },
+              features: [],
+              stock: relCat.productCount || 0,
+              customizable: false
+            }))}
+            initialDesktop={3}
+            initialLaptop={2}
+            initialMobile={1}
+            left={true}
+          />
+        </div>
+      )}
     </div>
   );
 }
