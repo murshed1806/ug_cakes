@@ -1,6 +1,5 @@
 // src/layouts/CategoryLayout.jsx
 import { Outlet } from "react-router-dom";
-import CategorySidebar from "@/root/Components/Category/CategorySidebar";
 import NavbarWithNavigation from "@/root/Components/NavbarWithNavigation";
 import Footer from "@/root/Components/Footer/Footer";
 import CategoryBreadcrumb from "@/root/Components/Category/CategoryBreadcrumb";

@@ -1,6 +1,6 @@
 // src/components/category-specific/WeddingSpecial.jsx
 import React from "react";
-import { Heart, Sparkles, Gift, Star, Gem, Crown } from "lucide-react"; // Removed Ring, added Gem and Crown as alternatives
+import { Heart, Sparkles, Gift} from "lucide-react"; // Removed Ring, added Gem and Crown as alternatives
 import AllCards from "./../../Cards/AllCards";
 
 export default function WeddingSpecial({ category, products, specificData }) {

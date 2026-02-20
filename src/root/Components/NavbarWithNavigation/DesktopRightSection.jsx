@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { User, ShoppingCart, Heart } from "lucide-react";
+import { User, ShoppingCart } from "lucide-react";
 import OfferBadge from "./OfferBadge";
 import DesktopSearch from "./DesktopSearch";
 import ThemeToggle from "./ThemeToggle";

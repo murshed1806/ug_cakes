@@ -1,6 +1,6 @@
 // src/components/category-specific/CupcakeSpecial.jsx
 import React from "react";
-import { Cake, Sparkles, Gift, Heart, Star, Cookie } from "lucide-react"; // Removed Cupcake, added Cake and Cookie as alternatives
+import {  Sparkles, Gift } from "lucide-react"; // Removed Cupcake, added Cake and Cookie as alternatives
 import AllCards from "./../../Cards/AllCards";
 
 export default function CupcakeSpecial({ category, products, specificData }) {
