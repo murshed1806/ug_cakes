@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { motion, AnimatePresence } from 'framer-motion'; // Motion import
-import { FcGoogle } from 'react-icons/fc';
 import { FiMail, FiLock, FiUser, FiEye, FiEyeOff, FiArrowRight } from 'react-icons/fi';
 import GoggleBTN from '@/root/Buttons/GoggleBTN';
 import useAuth from '@/Hooks/useAuth';

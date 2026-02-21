@@ -1,6 +1,6 @@
 // src/components/category-specific/KidsSpecial.jsx
 import React from "react";
-import { Baby, Sparkles, Cake, Star, Gift } from "lucide-react";
+import { Baby, Sparkles, Cake, Gift } from "lucide-react";
 import AllCards from "./../../Cards/AllCards";
 
 export default function KidsSpecial({ category, products, specificData }) {

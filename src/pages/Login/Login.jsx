@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FcGoogle } from 'react-icons/fc';
-import { FiMail, FiLock, FiEye, FiEyeOff, FiArrowRight, FiCheckCircle } from 'react-icons/fi';
+import { FiMail, FiLock, FiEye, FiEyeOff, FiArrowRight } from 'react-icons/fi';
 import { Link, useNavigate } from 'react-router';
 import GoggleBTN from '@/root/Buttons/GoggleBTN';
 import useAuth from '@/Hooks/useAuth';

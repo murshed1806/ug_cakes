@@ -9,7 +9,6 @@ import {
   SheetDescription 
 } from "@/components/ui/sheet";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
-import NavigateContent from "./NavigateContent";
 import MobileNavigateContent from "./MobileNavigateContent";
 
 const MobileRightIcons = ({

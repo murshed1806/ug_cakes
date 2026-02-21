@@ -1,6 +1,6 @@
 // src/components/category-specific/PastrySpecial.jsx
 import React from "react";
-import { Croissant, Coffee, Sparkles, Gift, Star } from "lucide-react";
+import { Croissant, Coffee, Sparkles, Gift } from "lucide-react";
 import AllCards from "./../../Cards/AllCards";
 
 export default function PastrySpecial({ category, products, specificData }) {

@@ -1,6 +1,6 @@
 // src/components/category-specific/AnniversarySpecial.jsx
 import React from "react";
-import { Heart, Calendar, Gift, Clock, Star } from "lucide-react";
+import { Heart, Calendar, Gift, Clock } from "lucide-react";
 import AllCards from "./../../Cards/AllCards";
 
 export default function AnniversarySpecial({

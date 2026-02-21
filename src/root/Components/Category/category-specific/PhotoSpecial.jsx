@@ -1,6 +1,6 @@
 // src/components/category-specific/PhotoSpecial.jsx
 import React from "react";
-import { Camera, Image, Heart, Sparkles, Gift } from "lucide-react";
+import { Camera, Image, Heart, Gift } from "lucide-react";
 import AllCards from "./../../Cards/AllCards";
 
 export default function PhotoSpecial({ category, products, specificData }) {

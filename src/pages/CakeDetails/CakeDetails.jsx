@@ -14,7 +14,6 @@ import {
 } from 'lucide-react';
 import { 
   getProductById, 
-  getCategoryById, 
   getRelatedProducts,
   getCategoryBySlug,
   categories 
