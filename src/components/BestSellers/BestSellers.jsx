@@ -38,8 +38,11 @@ const BestSellers = () => {
               Login
             </button>
           </Link>
+          
         )}
+
       </div>
+
 
       {/* All Cards Component */}
       <AllCards 
